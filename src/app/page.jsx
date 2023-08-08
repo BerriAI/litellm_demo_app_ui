@@ -168,7 +168,7 @@ response = completion(model="${model}", messages=messages${deployment_id ? `, de
       </div>
       <a href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener noreferrer">
       <div className="flex flex-col items-center" style={{width: '80vw'}}>
-        <p className="my-4 text-xl">Built with ❤️ with 🚅 LiteLLM</p>
+        <p className="my-4 text-xl">Built with ❤️ using 🚅 LiteLLM</p>
         <p className="my-4 text-xl">Text/iMessage/Whatsapp us @ +17708783106</p>
       </div>
       </a>
