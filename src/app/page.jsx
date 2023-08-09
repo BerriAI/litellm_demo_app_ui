@@ -146,7 +146,7 @@ response = completion(model="${model}", messages=messages${deployment_id ? `, de
           <Option value="gpt-3.5-turbo">gpt-3.5-turbo</Option>
           <Option value="gpt-4">gpt-4</Option>
           <Option value="claude-instant-1">claude-instant-1</Option>
-          <Option value="claude-2">claude-2</Option>
+          <Option value="claude-instant-1">claude-2</Option>
           <Option value="azure-openai">azure-openai</Option>
           <Option value="command-nightly">command-nightly [Cohere's API]</Option>
           <Option value="replicate/llama-2-70b-chat:2c1608e18606fad2812020dc541930f2d0495ce32eee50074220b87300bc16e1">replicate/llama-2.. [Replicate's API]</Option>
