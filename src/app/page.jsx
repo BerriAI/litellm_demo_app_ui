@@ -28,15 +28,15 @@ export default function App() {
     let tempTextToCopy = textRef.current ? textRef.current.innerText : "";
 
     // add the pip install command at the start of the string
-    let litePreReqs = "!pip install litellm\n" + "## set ENV variables\n" 
+    let litePreReqs = "!pip install litellm\n" + "import os\n## set ENV variables\n" 
     console.log('azure_value: ', azure_value)
     if (azure_value == true) {
       litePreReqs += "os.environ['AZURE_API_KEY'] = '' \n"
       litePreReqs += "os.environ['AZURE_API_BASE'] = ''\n"
       litePreReqs += "os.environ['AZURE_API_VERSION'] = '' # For more - https://litellm.readthedocs.io/en/latest/supported/ \n"
-    } else if (model == "gpt-3.5-turbo") {
+    } else if (model == "gpt-3.5-turbo" || model == "gpt-4") {
       litePreReqs += "os.environ['OPENAI_API_KEY'] = '' # For more - https://litellm.readthedocs.io/en/latest/supported/ \n"
-    } else if (model == "claude-instant-1") {
+    } else if (model == "claude-instant-1" || model == "claude-2") {
       litePreReqs += "os.environ['ANTHROPIC_API_KEY'] = '' # For more - https://litellm.readthedocs.io/en/latest/supported/ \n"
     } else if (model == "command-nightly") {
       litePreReqs += "os.environ['COHERE_API_KEY'] = '' # For more - https://litellm.readthedocs.io/en/latest/supported/ \n"
@@ -144,7 +144,9 @@ response = completion(model="${model}", messages=messages${deployment_id ? `, de
       </div>
         <Select defaultValue="gpt-3.5-turbo" className="w-full mt-1" onChange={handleModelChange} size="large">
           <Option value="gpt-3.5-turbo">gpt-3.5-turbo</Option>
+          <Option value="gpt-4">gpt-4</Option>
           <Option value="claude-instant-1">claude-instant-1</Option>
+          <Option value="claude-2">claude-2</Option>
           <Option value="azure-openai">azure-openai</Option>
           <Option value="command-nightly">command-nightly [Cohere's API]</Option>
           <Option value="replicate/llama-2-70b-chat:2c1608e18606fad2812020dc541930f2d0495ce32eee50074220b87300bc16e1">replicate/llama-2.. [Replicate's API]</Option>
