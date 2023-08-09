@@ -29,12 +29,13 @@ export default function App() {
 
     // add the pip install command at the start of the string
     let litePreReqs = "!pip install litellm\n" + "## set ENV variables\n" 
+    console.log('azure_value: ', azure_value)
     if (azure_value == true) {
       litePreReqs += "os.environ['AZURE_API_KEY'] = '' \n"
       litePreReqs += "os.environ['AZURE_API_BASE'] = ''\n"
       litePreReqs += "os.environ['AZURE_API_VERSION'] = '' # For more - https://litellm.readthedocs.io/en/latest/supported/ \n"
     } else if (model == "gpt-3.5-turbo") {
-      
+      litePreReqs += "os.environ['OPENAI_API_KEY'] = '' # For more - https://litellm.readthedocs.io/en/latest/supported/ \n"
     } else if (model == "claude-instant-1") {
       litePreReqs += "os.environ['ANTHROPIC_API_KEY'] = '' # For more - https://litellm.readthedocs.io/en/latest/supported/ \n"
     } else if (model == "command-nightly") {
@@ -48,7 +49,7 @@ export default function App() {
     tempTextToCopy = litePreReqs + tempTextToCopy;
 
     setTextToCopy(tempTextToCopy);
-  }, [model, prompt]);
+  }, [model, prompt, azure_value]);
 
 
   const handleModelChange = (value) => {
@@ -128,7 +129,7 @@ export default function App() {
       <div className="space-y-5">
         <h3 className="text-base">Call Azure, Anthropic, OpenAI, Cohere and Replicate with just 1 function.</h3>
         <div>
-        <div className="bg-gray-800 rounded text-gray-200 flex justify-between items-start" style={{width: '80vw', overflow: 'auto'}}>
+        <div className="bg-gray-800 relative rounded text-gray-200 flex justify-between items-start" style={{width: '80vw', overflow: 'auto'}}>
         <code className="flex-shrink-0">
         <pre className='p-3' ref={textRef}>
               {`from litellm import completion
@@ -138,7 +139,7 @@ response = completion(model="${model}", messages=messages${deployment_id ? `, de
               </pre>
             </code>
             <CopyToClipboard text={textToCopy}>
-                <Button type="primary" icon={<AiOutlineCopy />} style={{ marginLeft: 'auto' }} />
+                <Button type="primary" icon={<AiOutlineCopy />} style={{ position: 'absolute', top: 0, right: 0 }}  />
             </CopyToClipboard>
       </div>
         <Select defaultValue="gpt-3.5-turbo" className="w-full mt-1" onChange={handleModelChange} size="large">
