@@ -3,11 +3,11 @@ import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react';
 import { Input, Button, Select } from 'antd';
 const { Option } = Select;
-
 import { prettyPrintJson } from 'pretty-print-json';
 import { AiOutlineCopy } from 'react-icons/ai';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Navbar from './components/Navbar';
+
 export default function App() {
   const [model, setModel] = useState('gpt-3.5-turbo');
   const [prompt, setPrompt] = useState("Hey, how's it going?");
@@ -78,7 +78,8 @@ export default function App() {
       "azure": azure_value
     }
 
-    fetch('https://litellm-demo-app-7tn2.zeet-berri.zeet.app/api_completion', {
+    // https://litellm-demo-app-7tn2.zeet-berri.zeet.app/api_completion
+    fetch('http://localhost:32771/api_completion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
