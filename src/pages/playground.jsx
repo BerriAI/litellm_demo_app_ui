@@ -36,9 +36,10 @@ const Page = () => {
 
   const onClick = () => {
     try {
-      const apiUrl = 'https://litellm-playground-backend-6wxl.zeet-berri.zeet.app/api_completion'; // Replace URL with your API endpoint
+      // https://litellm-playground-backend-6wxl.zeet-berri.zeet.app
+      const apiUrl = 'https://api.litellm.ai//api_completion'; // Replace URL with your API endpoint
       const bodies = [
-        { "model": "gorilla-7b-hf-v1", "prompt": prompt, "llm_provider": "custom_openai"}, // Replace with your JSON body
+        { "model": "gorilla-7b-hf-v1", "prompt": prompt, "custom_llm_provider": "custom_openai", "custom_api_base": "http://zanino.millennium.berkeley.edu:8000/v1"}, // Replace with your JSON body
         { "model": "gpt-4", "prompt": prompt },
         { "model": "claude-2", "prompt": prompt },
       ];
