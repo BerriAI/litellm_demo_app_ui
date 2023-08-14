@@ -70,16 +70,23 @@ export default function App() {
 
   const handleSubmit = () => {
     console.log("submit")
-    setApiResultStatus('⏳ New response is loading ...')
-    // handle submit logic here
-    let data = {
-      "model": model,
-      "prompt": prompt,
-      "azure": azure_value
+    let data = {}
+    if (azure_value == true) {
+      data = {
+        "model": model,
+        "prompt": prompt,
+        "azure": azure_value,
+        "deployment_id": "chatgpt-test"
+      }
+    } else {
+      data = {
+        "model": model,
+        "prompt": prompt,
+        "azure": azure_value
+      }
     }
-
-    // https://litellm-demo-app-7tn2.zeet-berri.zeet.app/api_completion
-    fetch('http://localhost:32771/api_completion', {
+    setApiResultStatus('⏳ New response is loading ...')
+    fetch('https://api.litellm.ai/api_completion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

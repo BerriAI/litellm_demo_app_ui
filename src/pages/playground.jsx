@@ -15,8 +15,24 @@ const Page = () => {
   const [value1, setValue1] = useState('');
   const [value2, setValue2] = useState('');
   const [value3, setValue3] = useState('');
+  const [all_models, setAllModels] = useState('');
   const [prompt, setPrompt] = useState("Find me an API to translate from English to French.");
   const handleOnChange = (e) => setPrompt(e.target.value);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/get_model_list');
+        const data = await response.json();
+        setAllModels(data.model_list);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   useEffect(() => {
     // get the text inside the <pre> tag
     let tempTextToCopy = textRef.current ? textRef.current.innerText : "";
@@ -36,8 +52,8 @@ const Page = () => {
 
   const onClick = () => {
     try {
-      // https://litellm-playground-backend-6wxl.zeet-berri.zeet.app
-      const apiUrl = 'https://api.litellm.ai/api_completion'; // Replace URL with your API endpoint
+      // https://api.litellm.ai
+      const apiUrl = 'http://localhost:4000/api_completion'; // Replace URL with your API endpoint
       const bodies = [
         { "model": "gorilla-7b-hf-v1", "prompt": prompt, "custom_llm_provider": "custom_openai", "custom_api_base": "http://zanino.millennium.berkeley.edu:8000/v1"}, // Replace with your JSON body
         { "model": "gpt-4", "prompt": prompt },
@@ -81,6 +97,7 @@ const Page = () => {
 
   return (
     <main className="flex min-h-screen flex-col items-center m-10">
+      {console.log("all model list: ", all_models)}
       <Navbar />
       <div className="fixed before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]"/>
       <a href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener noreferrer">
@@ -129,19 +146,19 @@ const Page = () => {
   <div className="flex h-full space-x-4">
   <div className="flex-1 h-full py-2">
     <p className='text-base mb-2'>Gorilla</p>
-    <div className='h-full border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-y-auto'>
+    <div className='h-full border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-y-auto' style={{width: '25vw', height: '30vh', overflow: 'auto'}}>
       {value1}
     </div>
   </div>
   <div className="flex-1 h-full py-2">
     <p className='text-base mb-2'>GPT-4</p>
-      <div className='h-full border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-y-auto'>
+      <div className='h-full border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-y-auto' style={{width: '25vw', height: '30vh', overflow: 'auto'}}>
         {value2}
       </div>
   </div>
   <div className="flex-1 h-full py-2">
     <p className='text-base mb-2'>Anthropic</p>
-    <div className='h-full border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-y-auto'>
+    <div className='h-full border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-y-auto' style={{width: '25vw', height: '30vh', overflow: 'auto'}}>
       {value3}
     </div>
   </div>
