@@ -51,13 +51,16 @@ const Page = () => {
   }, [prompt]);
 
   const onClick = () => {
+    console.log("value1: ", value1)
+    console.log("value2: ", value2)
+    console.log("value3: ", value3)
     try {
       // https://api.litellm.ai
       const apiUrl = 'http://localhost:4000/api_completion'; // Replace URL with your API endpoint
       const bodies = [
-        { "model": "gorilla-7b-hf-v1", "prompt": prompt, "custom_llm_provider": "custom_openai", "custom_api_base": "http://zanino.millennium.berkeley.edu:8000/v1"}, // Replace with your JSON body
-        { "model": "gpt-4", "prompt": prompt },
-        { "model": "claude-2", "prompt": prompt },
+        { "model": value1, "prompt": prompt, "custom_llm_provider": "custom_openai", "custom_api_base": "http://zanino.millennium.berkeley.edu:8000/v1"}, // Replace with your JSON body
+        { "model": value2, "prompt": prompt },
+        { "model": value3, "prompt": prompt },
       ];
   
       bodies.forEach(body => {
@@ -125,7 +128,7 @@ const Page = () => {
       <div className="flex flex-col w-full h-[50vh] justify-center px-5 space-y-4">
       
   {/* First input box */}
-  <p>This is a demo playground to compare function calling across Gorilla, GPT-4, and Anthropic - all being called via LiteLLM (code below).</p>
+  <p>This is a demo playground to compare different LLMs - all being called via LiteLLM (code below).</p>
   <div className="relative h-[40%] w-full">
   <textarea
       className="h-full w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base leading-tight resize-none"
@@ -145,19 +148,61 @@ const Page = () => {
   {/* Group of input boxes */}
   <div className="flex h-full space-x-4">
   <div className="flex-1 h-full py-2">
-    <p className='text-base mb-2'>Gorilla</p>
+    <Select
+  showSearch
+  className='mb-5'
+  style={{ width: '25vw' }}
+  placeholder="Select a model"
+  optionFilterProp="children"
+  onChange={setValue1}
+  filterOption={(input, option) =>
+    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+  }
+>
+{Array.isArray(all_models) && all_models.map((model, index) => (
+    <Select.Option key={index} value={model}>{model}</Select.Option>
+  ))}
+</Select>
     <div className='h-full border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-y-auto' style={{width: '25vw', height: '30vh', overflow: 'auto'}}>
       {value1}
     </div>
   </div>
   <div className="flex-1 h-full py-2">
-    <p className='text-base mb-2'>GPT-4</p>
+  <Select
+  showSearch
+  className='mb-5'
+  style={{ width: '25vw' }}
+  placeholder="Select a model"
+  optionFilterProp="children"
+  onChange={setValue2}
+  filterOption={(input, option) =>
+    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+  }
+>
+{Array.isArray(all_models) && all_models.map((model, index) => (
+    <Select.Option key={index} value={model}>{model}</Select.Option>
+  ))}
+</Select>
       <div className='h-full border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-y-auto' style={{width: '25vw', height: '30vh', overflow: 'auto'}}>
         {value2}
       </div>
   </div>
   <div className="flex-1 h-full py-2">
-    <p className='text-base mb-2'>Anthropic</p>
+  <Select
+  showSearch
+  className='mb-5'
+  style={{ width: '25vw' }}
+  placeholder="Select a model"
+  optionFilterProp="children"
+  onChange={setValue3}
+  filterOption={(input, option) =>
+    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+  }
+>
+{Array.isArray(all_models) && all_models.map((model, index) => (
+    <Select.Option key={index} value={model}>{model}</Select.Option>
+  ))}
+</Select>
     <div className='h-full border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm overflow-y-auto' style={{width: '25vw', height: '30vh', overflow: 'auto'}}>
       {value3}
     </div>
