@@ -215,20 +215,18 @@ const Page = () => {
         <code className="flex-shrink-0 w-full">
         <pre className='p-3' ref={textRef}>
               {`from litellm import completion
-models = ["gorilla-7b-hf-v1", "gpt-4", "claude-2"]
-prompt = "${prompt}"
-custom_llm_provider = None
-custom_api_base = None
-for model in models: 
-  if model == "gorilla-7b-hf-v1":
-      custom_llm_provider = "custom_openai"
-      custom_api_base = "http://zanino.millennium.berkeley.edu:8000/v1"
-  messages = [{ "content": prompt,"role": "user"}]
-  try:
-      response = completion(model=model, messages=messages, custom_llm_provider=llm_provider, custom_api_base=custom_api_base)
-  except Exception as e:
-      traceback.print_exc()
-      response = {"error": str(e)}`}
+
+## set ENV variables
+os.environ["OPENAI_API_KEY"] = "openai key"
+os.environ["COHERE_API_KEY"] = "cohere key"
+
+messages = [{ "content": "Hello, how are you?","role": "user"}]
+
+# openai call
+response = completion(model="gpt-3.5-turbo", messages=messages)
+
+# cohere call
+response = completion("command-nightly", messages)`}
               </pre>
             </code>
             <CopyToClipboard text={textToCopy}>
