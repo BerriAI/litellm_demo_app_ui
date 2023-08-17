@@ -77,13 +77,13 @@ const Page = () => {
             const response = jsonResponse["choices"][0]["message"]["content"];
                       // Determine which model's response has been received and set the appropriate state variable
             switch (body.model) {
-              case "gorilla-7b-hf-v1":
+              case value1:
                 setValue1(response);
                 break;
-              case "gpt-4":
+              case value2:
                 setValue2(response);
                 break;
-              case "claude-2":
+              case value3:
                 setValue3(response);
                 break;
               default:
