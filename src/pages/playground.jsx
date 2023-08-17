@@ -22,7 +22,7 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:4000/get_model_list');
+        const response = await fetch('https://api.litellm.ai/get_model_list');
         const data = await response.json();
         setAllModels(data.model_list);
       } catch (error) {
@@ -56,7 +56,7 @@ const Page = () => {
     console.log("value3: ", value3)
     try {
       // https://api.litellm.ai
-      const apiUrl = 'http://localhost:4000/api_completion'; // Replace URL with your API endpoint
+      const apiUrl = 'https://api.litellm.ai/api_completion'; // Replace URL with your API endpoint
       const bodies = [
         { "model": value1, "prompt": prompt, "custom_llm_provider": "custom_openai", "custom_api_base": "http://zanino.millennium.berkeley.edu:8000/v1"}, // Replace with your JSON body
         { "model": value2, "prompt": prompt },
