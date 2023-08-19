@@ -56,18 +56,19 @@ const Page = () => {
     console.log("value3: ", value3)
     try {
       // https://api.litellm.ai
-      const apiUrl = 'https://api.litellm.ai/api_completion'; // Replace URL with your API endpoint
+      const apiUrl = 'https://api.litellm.ai/chat/completions'; // Replace URL with your API endpoint
       const bodies = [
-        { "model": value1, "prompt": prompt, "custom_llm_provider": "custom_openai", "custom_api_base": "http://zanino.millennium.berkeley.edu:8000/v1"}, // Replace with your JSON body
-        { "model": value2, "prompt": prompt },
-        { "model": value3, "prompt": prompt },
+        { "model": value1, "messages": [{"role": "user", "content": prompt}] }, // Replace with your JSON body
+        { "model": value2, "messages": [{"role": "user", "content": prompt}] },
+        { "model": value3, "messages": [{"role": "user", "content": prompt}] },
       ];
   
       bodies.forEach(body => {
         fetch(apiUrl, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer sk-playground-02738593-a46e-4b39-99a9-5bb1c6bd6950',
           },
           body: JSON.stringify(body)
         })

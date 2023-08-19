@@ -74,22 +74,22 @@ export default function App() {
     if (azure_value == true) {
       data = {
         "model": model,
-        "prompt": prompt,
-        "azure": azure_value,
+        "messages": [{"role": "user", "content": prompt}],
+        "custom_llm_provider": "azure",
         "deployment_id": "chatgpt-test"
       }
     } else {
       data = {
         "model": model,
-        "prompt": prompt,
-        "azure": azure_value
+        "messages": [{"role": "user", "content": prompt}],
       }
     }
     setApiResultStatus('⏳ New response is loading ...')
-    fetch('https://api.litellm.ai/api_completion', {
+    fetch('https://api.litellm.ai/chat/completions', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer sk-landing_page-6a3130ee-83c5-4ee2-9c71-2e9c03096a360',
       },
       body: JSON.stringify(data)
     })

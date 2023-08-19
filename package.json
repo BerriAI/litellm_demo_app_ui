@@ -20,6 +20,7 @@
     "json-pretty-html": "^1.1.6",
     "next": "13.4.13",
     "next-themes": "^0.2.1",
+    "openai": "^4.0.1",
     "postcss": "8.4.27",
     "pretty-print-json": "^2.0.2",
     "react": "18.2.0",
