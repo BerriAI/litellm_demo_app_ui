@@ -53,15 +53,7 @@ export default function App() {
 
 
   const handleModelChange = (value) => {
-    if (value == "azure-openai") {
-      setAzureValue(true)
-      setModel("gpt-3.5-turbo");
-      setDeploymentID(value)
-    } else {
-      setModel(value);
-      setAzureValue(false)
-      setDeploymentID(null)
-    }
+    setModel(value);
   }
 
   const handlePromptChange = (e) => {

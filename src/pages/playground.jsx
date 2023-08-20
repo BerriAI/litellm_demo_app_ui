@@ -12,8 +12,11 @@ import Navbar from '../app/components/Navbar'
 const Page = () => {
   const textRef = useRef();
   const [textToCopy, setTextToCopy] = useState("");
+  const [model1, setModel1] = useState('');
   const [value1, setValue1] = useState('');
+  const [model2, setModel2] = useState('');
   const [value2, setValue2] = useState('');
+  const [model3, setModel3] = useState('');
   const [value3, setValue3] = useState('');
   const [all_models, setAllModels] = useState('');
   const [prompt, setPrompt] = useState("Find me an API to translate from English to French.");
@@ -51,16 +54,13 @@ const Page = () => {
   }, [prompt]);
 
   const onClick = () => {
-    console.log("value1: ", value1)
-    console.log("value2: ", value2)
-    console.log("value3: ", value3)
     try {
       // https://api.litellm.ai
       const apiUrl = 'https://api.litellm.ai/chat/completions'; // Replace URL with your API endpoint
       const bodies = [
-        { "model": value1, "messages": [{"role": "user", "content": prompt}] }, // Replace with your JSON body
-        { "model": value2, "messages": [{"role": "user", "content": prompt}] },
-        { "model": value3, "messages": [{"role": "user", "content": prompt}] },
+        { "model": model1, "messages": [{"role": "user", "content": prompt}] }, // Replace with your JSON body
+        { "model": model2, "messages": [{"role": "user", "content": prompt}] },
+        { "model": model3, "messages": [{"role": "user", "content": prompt}] },
       ];
   
       bodies.forEach(body => {
@@ -76,15 +76,15 @@ const Page = () => {
           .then(jsonResponse => {
             // Replace setValue with your appropriate method call
             const response = jsonResponse["choices"][0]["message"]["content"];
-                      // Determine which model's response has been received and set the appropriate state variable
+            // Determine which model's response has been received and set the appropriate state variable
             switch (body.model) {
-              case value1:
+              case model1:
                 setValue1(response);
                 break;
-              case value2:
+              case model2:
                 setValue2(response);
                 break;
-              case value3:
+              case model3:
                 setValue3(response);
                 break;
               default:
@@ -155,7 +155,7 @@ const Page = () => {
   style={{ width: '25vw' }}
   placeholder="Select a model"
   optionFilterProp="children"
-  onChange={setValue1}
+  onChange={setModel1}
   filterOption={(input, option) =>
     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
@@ -175,7 +175,7 @@ const Page = () => {
   style={{ width: '25vw' }}
   placeholder="Select a model"
   optionFilterProp="children"
-  onChange={setValue2}
+  onChange={setModel2}
   filterOption={(input, option) =>
     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
@@ -195,7 +195,7 @@ const Page = () => {
   style={{ width: '25vw' }}
   placeholder="Select a model"
   optionFilterProp="children"
-  onChange={setValue3}
+  onChange={setModel3}
   filterOption={(input, option) =>
     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
