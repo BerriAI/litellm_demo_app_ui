@@ -25,7 +25,16 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://api.litellm.ai/get_model_list');
+        
+        const response = await fetch('https://api.litellm.ai/get_model_list', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_email: "krrish@berri.ai"
+          })
+        });
         const data = await response.json();
         setAllModels(data.model_list);
       } catch (error) {
