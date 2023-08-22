@@ -60,8 +60,8 @@ export default function App() {
     setPrompt(e.target.value);
   }
 
-  const handleSubmit = () => {
-    console.log("submit")
+  const handleSubmit = async () => {
+    console.log("submit");
     let data = {}
     if (azure_value == true) {
       data = {
@@ -74,28 +74,74 @@ export default function App() {
       data = {
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
+        "stream": true
       }
     }
     setApiResultStatus('⏳ New response is loading ...')
-    fetch('https://api.litellm.ai/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer sk-landing_page-6a3130ee-83c5-4ee2-9c71-2e9c03096a360',
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(result => {
-        // handle the response data here
-        setApiResult(result)
-        console.log(result);
-        setApiResultStatus('👇New API Response')
-      })
-      .catch(error => {
-        // handle errors here
-        console.error(error);
+    try {
+      const response = await fetch('https://api.litellm.ai/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer sk-landing_page-6a3130ee-83c5-4ee2-9c71-2e9c03096a360',
+        },
+        body: JSON.stringify(data)
       });
+      if (!response.ok) throw new Error('API request failed');
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const result = response.json();
+        console.log(result);
+        setApiResult(result);
+        setApiResultStatus('👇New API Response');
+      } else if (contentType && contentType.includes("text/event-stream")) {
+        setApiResult("");
+        const body = response.body;
+        const reader = body.getReader();
+        const decoder = new TextDecoder();
+        let done = false;
+   
+        while (!done) {
+          const { value, done: readingDone } = await reader.read();
+          done = readingDone;
+        
+          let chunkValue = decoder.decode(value);
+          // Check if chunkValue starts with "data: " and remove it
+          if (chunkValue.startsWith('data: ')) {
+            chunkValue = chunkValue.slice(6);
+          }
+          // Split by new lines
+          const lines = chunkValue.split('\n');
+
+          // Check & Parse each line 
+          lines.forEach(line => {
+            if (line.startsWith('data: ')) {
+              line = line.slice(6); // remove "data: " 
+            }
+
+            if(line.trim() === "") return; // skip empty lines
+
+            try {
+              const data = JSON.parse(line);
+              const content = data.choices[0].delta.content;
+              console.log("Content:", content);
+              if (content) {
+                setApiResult((prev) => prev + content);
+              }
+            } 
+            catch (error) {
+              console.error("Error parsing JSON:", error);
+            }
+          });
+        }
+
+      } else {
+        throw new Error('API request failed');
+      } 
+    } catch (error) {
+      // handle network or other errors
+      console.error(error);
+    }
   }
   
   return (
