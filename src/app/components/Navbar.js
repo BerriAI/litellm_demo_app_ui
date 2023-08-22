@@ -1,12 +1,18 @@
 import Link from 'next/link';
+import Image from 'next/image'
 import React, { useState } from 'react';
 function Navbar() {
     return (
         <nav className="left-0 right-0 top-0 flex justify-between items-center h-12">
             <div className="text-left mx-4 my-2 absolute top-0 left-0">
+                <div className="flex flex-col items-center">
                 <Link href="/">
-                    <button className="text-xl text-gray-800">🚅 LiteLLM</button>
+                    <button className="text-gray-800 text-2xl px-4 py-1 rounded text-center">🚅 LiteLLM</button>
                 </Link>
+                <a href="https://github.com/BerriAI/litellm/tree/main/proxy-server#litellm-proxy-server-50-llm-models-error-handling-caching" target="_blank" rel="noopener noreferrer">
+                <Image src="https://railway.app/button.svg" alt="Powered by Railway" width={200} height={30} />
+                </a>
+            </div>
             </div>
             <div className="text-right mx-4 my-2 absolute top-0 right-0">
             <a href='https://buy.stripe.com/fZe7wcd3P4L8gP69AI' target="_blank" rel="noopener noreferrer">
