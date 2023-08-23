@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { AiOutlineCopy } from 'react-icons/ai';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Navbar from '../app/components/Navbar'
+import mixpanel from 'mixpanel-browser';
+
 const Page = () => {
   const textRef = useRef();
   const [textToCopy, setTextToCopy] = useState("");
@@ -21,6 +23,15 @@ const Page = () => {
   const [all_models, setAllModels] = useState('');
   const [prompt, setPrompt] = useState("Find me an API to translate from English to French.");
   const handleOnChange = (e) => setPrompt(e.target.value);
+  mixpanel.init("69c4620538e80373ae4ef8edb32ce5e3", { debug: true, track_pageview: true, persistence: 'localStorage' });
+
+  useEffect(() => {
+    try {
+      mixpanel.track('litellm.playground.page_loaded', {})
+    } catch (error) {
+      console.error(error);
+    }
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +75,11 @@ const Page = () => {
 
   const onClick = () => {
     try {
+      try {
+        mixpanel.track('litellm.playground.submit_btn_clicked', {})
+      } catch (error) {
+        console.error(error);
+      }
       // https://api.litellm.ai
       const apiUrl = 'https://api.litellm.ai/chat/completions'; // Replace URL with your API endpoint
       const bodies = [
@@ -73,6 +89,11 @@ const Page = () => {
       ];
   
       bodies.forEach(body => {
+        try {
+          mixpanel.track('litellm.playground.model_call_made', {})
+        } catch (error) {
+          console.error(error);
+        }
         fetch(apiUrl, {
           method: 'POST',
           headers: {
@@ -83,6 +104,11 @@ const Page = () => {
         })
           .then(response => response.json())
           .then(jsonResponse => {
+            try {
+              mixpanel.track('litellm.playground.model_call_succeeded', {})
+            } catch (error) {
+              console.error(error);
+            }
             // Replace setValue with your appropriate method call
             const response = jsonResponse["choices"][0]["message"]["content"];
             // Determine which model's response has been received and set the appropriate state variable
@@ -100,7 +126,14 @@ const Page = () => {
                 console.error('Unexpected model:', body.model);
             }
           })
-          .catch(error => console.error(error));
+          .catch(error => {
+            try {
+              mixpanel.track('litellm.playground.model_call_failed', {})
+            } catch (error) {
+              console.error(error);
+            }
+            console.error(error)
+          });
       });
 
     } catch (error) {

@@ -1,12 +1,13 @@
 'use client'
 import Image from 'next/image'
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, use } from 'react';
 import { Input, Button, Select } from 'antd';
 const { Option } = Select;
 import { prettyPrintJson } from 'pretty-print-json';
 import { AiOutlineCopy } from 'react-icons/ai';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Navbar from './components/Navbar';
+import mixpanel from 'mixpanel-browser';
 
 export default function App() {
   const [model, setModel] = useState('gpt-3.5-turbo');
@@ -22,6 +23,16 @@ export default function App() {
 'model': 'claude-instant-1',
 'usage': {'prompt_tokens': 18, 'completion_tokens': 23, 'total_tokens': 41}});
   const [textToCopy, setTextToCopy] = useState("");
+  mixpanel.init("69c4620538e80373ae4ef8edb32ce5e3", { debug: true, track_pageview: true, persistence: 'localStorage' });
+
+  useEffect(() => {
+    try {
+      mixpanel.track('litellm.landing_page.page_loaded', {})
+    } catch (error) {
+      console.error(error);
+    }
+  }, [])
+
   const textRef = useRef();
   useEffect(() => {
     // get the text inside the <pre> tag
@@ -62,6 +73,11 @@ export default function App() {
 
   const handleSubmit = async () => {
     console.log("submit");
+    try {
+      mixpanel.track('litellm.landing_page.submit_btn_clicked', {})
+    } catch (error) {
+      console.error(error);
+    }
     let data = {}
     if (azure_value == true) {
       data = {
