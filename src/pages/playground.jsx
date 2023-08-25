@@ -2,6 +2,7 @@
 import './globals.css'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
+
 import { Input, Button, Select } from 'antd';
 import { useState, useRef, useEffect } from 'react';
 const inter = Inter({ subsets: ['latin'] })
