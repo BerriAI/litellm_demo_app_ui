@@ -14,11 +14,11 @@ import mixpanel from 'mixpanel-browser';
 const Page = () => {
   const textRef = useRef();
   const [textToCopy, setTextToCopy] = useState("");
-  const [model1, setModel1] = useState('');
+  const [model1, setModel1] = useState('gpt-3.5-turbo');
   const [value1, setValue1] = useState('');
-  const [model2, setModel2] = useState('');
+  const [model2, setModel2] = useState('anthropic/claude-instant-1');
   const [value2, setValue2] = useState('');
-  const [model3, setModel3] = useState('');
+  const [model3, setModel3] = useState('command-nightly');
   const [value3, setValue3] = useState('');
   const [all_models, setAllModels] = useState('');
   const [prompt, setPrompt] = useState("Find me an API to translate from English to French.");
@@ -195,7 +195,7 @@ const Page = () => {
   showSearch
   className='mb-5'
   style={{ width: '25vw' }}
-  placeholder="Select a model"
+  placeholder={model1}
   optionFilterProp="children"
   onChange={setModel1}
   filterOption={(input, option) =>
@@ -215,7 +215,7 @@ const Page = () => {
   showSearch
   className='mb-5'
   style={{ width: '25vw' }}
-  placeholder="Select a model"
+  placeholder={model2}
   optionFilterProp="children"
   onChange={setModel2}
   filterOption={(input, option) =>
@@ -235,7 +235,7 @@ const Page = () => {
   showSearch
   className='mb-5'
   style={{ width: '25vw' }}
-  placeholder="Select a model"
+  placeholder={model3}
   optionFilterProp="children"
   onChange={setModel3}
   filterOption={(input, option) =>
