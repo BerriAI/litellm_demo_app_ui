@@ -14,11 +14,11 @@ import mixpanel from 'mixpanel-browser';
 const Page = () => {
   const textRef = useRef();
   const [textToCopy, setTextToCopy] = useState("");
-  const [model1, setModel1] = useState('gpt-3.5-turbo');
+  const [model1, setModel1] = useState('CodeLlama');
   const [value1, setValue1] = useState('');
-  const [model2, setModel2] = useState('anthropic/claude-instant-1');
+  const [model2, setModel2] = useState('Replit-Code-3B');
   const [value2, setValue2] = useState('');
-  const [model3, setModel3] = useState('command-nightly');
+  const [model3, setModel3] = useState('Starcoder');
   const [value3, setValue3] = useState('');
   const [all_models, setAllModels] = useState('');
   const [prompt, setPrompt] = useState("Find me an API to translate from English to French.");
@@ -160,7 +160,7 @@ const Page = () => {
           width={20}
           height={20}
         />
-        Getting Started
+        Create your own Playground
       </button>
       </a>
       <a href='https://discord.com/invite/wuPM9dRgDw' target="_blank" rel="noopener noreferrer">
@@ -171,7 +171,7 @@ const Page = () => {
       <div className="flex flex-col w-full h-[50vh] justify-center px-5 space-y-4">
       
   {/* First input box */}
-  <p>This is a demo playground to compare different LLMs - all being called via LiteLLM (code below).</p>
+  <p>This is a demo playground comparing different LLMs - all being called via LiteLLM (code below).</p>
   <div className="relative h-[40%] w-full">
   <textarea
       className="h-full w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base leading-tight resize-none"

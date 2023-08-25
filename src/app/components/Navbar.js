@@ -9,23 +9,15 @@ function Navbar() {
                 <Link href="/">
                     <button className="text-gray-800 text-2xl px-4 py-1 rounded text-center">🚅 LiteLLM</button>
                 </Link>
-                <a href="https://github.com/BerriAI/litellm/tree/main/proxy-server#litellm-proxy-server-50-llm-models-error-handling-caching" target="_blank" rel="noopener noreferrer">
-                <Image src="https://railway.app/button.svg" alt="Powered by Railway" width={200} height={30} />
-                </a>
             </div>
             </div>
             <div className="text-right mx-4 my-2 absolute top-0 right-0">
             <a href='https://buy.stripe.com/fZe7wcd3P4L8gP69AI' target="_blank" rel="noopener noreferrer">
             <button className="border border-gray-800 rounded-lg text-gray-800 text-xl px-4 py-1 rounded p-1 mr-2 text-center">Pricing</button>
             </a>
-            <Link href="/playground">
-                <button className="border border-gray-800 rounded-lg text-gray-800 text-xl px-4 py-1 rounded p-1 mr-2 text-center">
-                    Playground
-                </button>
-            </Link>
-                <a href="https://calendly.com/d/4mp-gd3-k5k/berriai-1-1-onboarding-litellm-hosted-version" target="_blank" rel="noopener noreferrer">
-                    <button className="border border-gray-800 rounded-lg text-gray-800 text-xl px-4 py-1 rounded p-1 text-center">Schedule Demo</button>
-                </a>
+            <a href="https://calendly.com/d/4mp-gd3-k5k/berriai-1-1-onboarding-litellm-hosted-version" target="_blank" rel="noopener noreferrer">
+                <button className="border border-gray-800 rounded-lg text-gray-800 text-xl px-4 py-1 rounded p-1 text-center">Schedule Demo</button>
+            </a>
             </div>
         </nav>
     )
