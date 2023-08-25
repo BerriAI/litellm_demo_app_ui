@@ -19,7 +19,7 @@ const Page = () => {
   const [value1, setValue1] = useState('');
   const [model2, setModel2] = useState('Replit-Code-3B');
   const [value2, setValue2] = useState('');
-  const [model3, setModel3] = useState('Starcoder');
+  const [model3, setModel3] = useState('starcoder');
   const [value3, setValue3] = useState('');
   const [all_models, setAllModels] = useState('');
   const [prompt, setPrompt] = useState("Find me an API to translate from English to French.");
