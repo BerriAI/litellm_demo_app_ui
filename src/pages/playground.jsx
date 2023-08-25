@@ -44,7 +44,7 @@ const Page = () => {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            user_email: "krrish@berri.ai"
+            user_email: "0e80c859-4748-4617-b563-1ef6f400a571"
           })
         });
         const data = await response.json();
