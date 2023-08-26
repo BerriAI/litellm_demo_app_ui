@@ -11,6 +11,7 @@ import { AiOutlineCopy } from 'react-icons/ai';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Navbar from '../app/components/Navbar'
 import mixpanel from 'mixpanel-browser';
+import { v4 as uuid } from 'uuid';
 
 const Page = () => {
   const textRef = useRef();
@@ -25,7 +26,13 @@ const Page = () => {
   const [prompt, setPrompt] = useState("Write a python function that prints hello world");
   const handleOnChange = (e) => setPrompt(e.target.value);
   mixpanel.init("69c4620538e80373ae4ef8edb32ce5e3", { debug: true, track_pageview: true, persistence: 'localStorage' });
-
+  const generateNewToken = () => {
+    // Generate a new token logic here
+    // For example, you can use a random string generator library like `uuid` or `nanoid`
+    const token = uuid(); // Example using the `uuid` library
+    return token;
+  };
+  
   useEffect(() => {
     try {
       mixpanel.track('litellm.playground.page_loaded', {})
@@ -153,7 +160,7 @@ const Page = () => {
         <p className="mb-5 text-xl"> An open-source library to simplify LLM completion + embedding calls. </p>
         </div>
       </a>
-      <a href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener noreferrer">
+      <a href={"https://docs.litellm.ai/docs/default_code_snippet" + `/?token=${generateNewToken()}`} target="_blank" rel="noopener noreferrer">
       <button className="border-2 border-black rounded-lg flex items-center gap-4 px-5 py-3 mb-3 transition duration-300 ease-in-out hover:bg-gray-400">
         <Image
           src="/octocat.svg"
