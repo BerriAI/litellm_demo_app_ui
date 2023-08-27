@@ -81,7 +81,7 @@ const Page = () => {
     setTextToCopy(tempTextToCopy);
   }, [prompt]);
 
-  const onClick = () => {
+  const onClick = async () => {
     try {
       try {
         mixpanel.track('litellm.playground.submit_btn_clicked', {})
@@ -91,18 +91,18 @@ const Page = () => {
       // https://api.litellm.ai
       const apiUrl = 'https://api.litellm.ai/chat/completions'; // Replace URL with your API endpoint
       const bodies = [
-        { "model": model1, "messages": [{"role": "user", "content": prompt}] }, // Replace with your JSON body
-        { "model": model2, "messages": [{"role": "user", "content": prompt}] },
-        { "model": model3, "messages": [{"role": "user", "content": prompt}] },
+        { "model": model1, "messages": [{"role": "user", "content": prompt}], "stream": true }, // Replace with your JSON body
+        { "model": model2, "messages": [{"role": "user", "content": prompt}], "stream": true },
+        { "model": model3, "messages": [{"role": "user", "content": prompt}], "stream": true },
       ];
   
-      bodies.forEach(body => {
+      bodies.forEach(async (body) => {
         try {
           mixpanel.track('litellm.playground.model_call_made', {})
         } catch (error) {
           console.error(error);
         }
-        fetch(apiUrl, {
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -110,15 +110,17 @@ const Page = () => {
           },
           body: JSON.stringify(body)
         })
-          .then(response => response.json())
-          .then(jsonResponse => {
-            try {
-              mixpanel.track('litellm.playground.model_call_succeeded', {})
-            } catch (error) {
-              console.error(error);
-            }
+        if (!response.ok) throw new Error('API request failed');
+        const contentType = response.headers.get("content-type");
+        try {
+          mixpanel.track('litellm.playground.model_call_succeeded', {})
+        } catch (error) {
+          console.error(error);
+        }
+        if (contentType && contentType.includes("application/json")) {
+            const result = response.json();
             // Replace setValue with your appropriate method call
-            const response = jsonResponse["choices"][0]["message"]["content"];
+            const response = result["choices"][0]["message"]["content"];
             console.log(`response: ${response} ; model: ${body.model}`)
             // Determine which model's response has been received and set the appropriate state variable
             switch (body.model) {
@@ -134,18 +136,68 @@ const Page = () => {
               default:
                 console.error('Unexpected model:', body.model);
             }
-          })
-          .catch(error => {
-            try {
-              mixpanel.track('litellm.playground.model_call_failed', {})
-            } catch (error) {
-              console.error(error);
-            }
-            console.error(error)
-          });
-      });
+          } else if (contentType && contentType.includes("text/event-stream")) {
+            const response_body = response.body;
+            const reader = response_body.getReader();
+            const decoder = new TextDecoder();
+            let done = false;
 
+            while (!done) {
+              const { value, done: readingDone } = await reader.read();
+              done = readingDone;
+
+              let chunkValue = decoder.decode(value);
+              // Check if chunkValue starts with "data: " and remove it
+              if (chunkValue.startsWith('data: ')) {
+                chunkValue = chunkValue.slice(6);
+              }
+              // Split by new lines
+              const lines = chunkValue.split('\n');
+
+              // Check & Parse each line 
+              lines.forEach(line => {
+                if (line.startsWith('data: ')) {
+                  line = line.slice(6); // remove "data: " 
+                }
+    
+                if(line.trim() === "") return; // skip empty lines
+    
+                try {
+                  const data = JSON.parse(line);
+                  const content = data.choices[0].delta.content;
+                  console.log("model:", body.model);
+                  console.log("content:", content);
+                  if (content) {
+                    switch (body.model) {
+                      case model1:
+                        setValue1((prev) => prev + content);
+                        break;
+                      case model2:
+                        setValue2((prev) => prev + content);
+                        break;
+                      case model3:
+                        setValue3((prev) => prev + content);
+                        break;
+                      default:
+                        console.error('Unexpected model:', body.model);
+                    }
+                  }
+                } 
+                catch (error) {
+                  console.error("Error parsing JSON:", error);
+                }
+              });
+            }
+          } else {
+            throw new Error('API request failed');
+          }
+      })
     } catch (error) {
+      try {
+        mixpanel.track('litellm.playground.model_call_failed', {})
+      } catch (error) {
+        console.error(error);
+      }
       console.error(error);
     }
   }
