@@ -148,7 +148,7 @@ const onClick = async () => {
       <Card>
         <Title className='p-1 text-center'>Model Details</Title>
         <p className="text-l m-5">Provider Name: Together AI</p>
-        <p className="text-l m-5">Context Window: 8096 tokens</p>
+        <p className="text-l m-5">Context Window: 16k tokens</p>
         <p className="text-l m-5">Cost: $0.003 / 1k tokens</p>
         </Card>
         </Col>
