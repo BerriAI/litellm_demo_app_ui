@@ -53,7 +53,7 @@ const onClick = async () => {
       console.error(error);
     }
     //https://api.litellm.ai
-    const apiUrl = 'http://0.0.0.0:4000/chat/completions'; // Replace URL with your API endpoint
+    const apiUrl = 'https://api.litellm.ai/chat/completions'; // Replace URL with your API endpoint
     const bodies = [
       { "model": "huggingface/https://ji16r2iys9a8rjk2.us-east-1.aws.endpoints.huggingface.cloud", "messages": [{"role": "user", "content": prompt}], "max_tokens": 128, "stream": true },
       { "model": "huggingface/https://tewodf1mzmqbo7yy.us-east-1.aws.endpoints.huggingface.cloud", "messages": [{"role": "user", "content": prompt}], "max_tokens": 128, "stream": true }
