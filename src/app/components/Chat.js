@@ -118,14 +118,8 @@ export default function Home() {
     } else {
         throw new Error('API request failed');
     }
-    
 
-    if (data.error === "Unauthorized") {
-      handleError();
-      return;
-    }
 
-    setMessages((prevMessages) => [...prevMessages, { "message": data.response, "type": "apiMessage" }]);
     setLoading(false);
     
   };
