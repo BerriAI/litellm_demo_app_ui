@@ -195,9 +195,6 @@ export default function Home() {
             </button>
             </form>
             </div>
-            <div className = {styles.footer}>
-            <p>Built with ❤️ from San Francisco</p>
-            </div>
         </div>
       </main>
     </>

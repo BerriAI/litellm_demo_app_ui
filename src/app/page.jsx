@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import mixpanel from 'mixpanel-browser';
 import Playground from "../pages/playground";
 import Chat from "./components/Chat";
+import { CopyBlock, solarizedDark } from "react-code-blocks";
 import {
   TabList,
   Tab,
@@ -49,21 +50,37 @@ export default function App() {
       </a>
     <TabGroup>
     <TabList className='w-full flex items-center justify-center'>
-        <Tab>Playground</Tab>
         <Tab>Doc QA</Tab>
+        <Tab>Playground</Tab>
       </TabList>
         <TabPanels>
+        <TabPanel>
+            <div className="flex flex-col">
+            <Chat/>
+            <CopyBlock text={`!pip install litellm
+from litellm import completion
+import os
+## set ENV variables
+os.environ["OPENAI_API_KEY"] = "openai key"
+os.environ["COHERE_API_KEY"] = "cohere key"
+
+messages = [{ "content": "Hello, how are you?","role": "user"}]
+
+# openai call
+response = completion(model="gpt-3.5-turbo", messages=messages)
+
+# cohere call
+response = completion("command-nightly", messages)
+`} customStyle={{ padding: "3%" }} language={"python"} theme={solarizedDark} showLineNumbers={false}/>
+            </div>
+          </TabPanel>
           <TabPanel>
             <div className="flex flex-col">
             <Playground/>
             </div>
           </TabPanel>
-          <TabPanel>
-            <div className="flex flex-col">
-            <Chat/>
-            </div>
-          </TabPanel>
-        </TabPanels>
+          </TabPanels>
+          
       </TabGroup>
       </main>
   )
