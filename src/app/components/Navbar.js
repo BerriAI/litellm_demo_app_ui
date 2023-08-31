@@ -12,8 +12,8 @@ function Navbar() {
             </div>
             </div>
             <div className="text-right mx-4 my-2 absolute top-0 right-0">
-            <Link href="/model_hub/codellama">
-                <button className="border border-gray-800 rounded-lg text-gray-800 text-xl px-4 py-1 rounded p-1 mr-2 text-center">Model Hub</button>
+            <Link href="/battleground">
+                <button className="border border-gray-800 rounded-lg text-gray-800 text-xl px-4 py-1 rounded p-1 mr-2 text-center">Battleground</button>
             </Link>
             <a href='https://buy.stripe.com/fZe7wcd3P4L8gP69AI' target="_blank" rel="noopener noreferrer">
             <button className="border border-gray-800 rounded-lg text-gray-800 text-xl px-4 py-1 rounded p-1 mr-2 text-center">Pricing</button>
