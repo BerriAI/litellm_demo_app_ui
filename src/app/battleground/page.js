@@ -27,7 +27,11 @@ export default function App() {
   const [model2, setModel2] = useState('huggingface/https://tewodf1mzmqbo7yy.us-east-1.aws.endpoints.huggingface.cloud');
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
-  const handleOnChange = (e) => setPrompt(e.target.value);
+  const handleOnChange = (e) => {
+    setPrompt(e.target.value)
+    setValue1("")
+    setValue2("")
+  };
   const textRef = useRef();
   const handleModelNameCopy = async () => {
     message.success('Model name copied...');
