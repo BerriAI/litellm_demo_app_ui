@@ -145,6 +145,7 @@ export default function Home() {
   return (
     <>
       <main className={styles.main}>
+      <p className='p-5'>Ask our bot questions on how to use LiteLLM. This bot uses GPT-4, Anthropic, and CodeLlama under-the-hood <span className='text-blue-500'><a href='https://github.com/BerriAI/litellm/tree/main/cookbook/llm-ab-test-server' target="_blank" rel="noopener noreferrer">[see code]</a></span></p>
       <div className = {styles.cloud}>
         <div ref={messageListRef} className = {styles.messagelist}>
         {messages.map((message, index) => {
