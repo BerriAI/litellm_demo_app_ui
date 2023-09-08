@@ -50,13 +50,13 @@ export default function App() {
       </a>
     <TabGroup>
     <TabList className='w-full flex items-center justify-center'>
-        <Tab>Doc QA</Tab>
-        <Tab>Playground</Tab>
+        <Tab>Implementation Code</Tab>
+        {/* <Tab>Playground</Tab> */}
       </TabList>
         <TabPanels>
         <TabPanel>
             <div className="flex flex-col">
-            <Chat/>
+            {/* <Chat/> */}
             <CopyBlock text={`!pip install litellm
 from litellm import completion
 import os
@@ -74,11 +74,11 @@ response = completion("command-nightly", messages)
 `} customStyle={{ padding: "3%" }} language={"python"} theme={solarizedDark} showLineNumbers={false}/>
             </div>
           </TabPanel>
-          <TabPanel>
+          {/* <TabPanel>
             <div className="flex flex-col">
             <Playground/>
             </div>
-          </TabPanel>
+          </TabPanel> */}
           </TabPanels>
           
       </TabGroup>
