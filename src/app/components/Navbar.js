@@ -12,9 +12,6 @@ function Navbar() {
             </div>
             </div>
             <div className="text-right mx-4 my-2 absolute top-0 right-0">
-            <a href="https://admin.litellm.ai/" target="_blank" rel="noopener noreferrer">
-                <button className="border border-gray-800 rounded-lg text-gray-800 text-xl px-4 py-1 rounded p-1 mr-2 text-center">Hosted Product</button>
-            </a>
             <a href="https://docs.litellm.ai/docs/" target="_blank" rel="noopener noreferrer">
                 <button className="border border-gray-800 rounded-lg text-gray-800 text-xl px-4 py-1 rounded p-1 mr-2 text-center">Docs</button>
             </a>
