@@ -32,7 +32,7 @@ export default function App() {
         <p className="mb-5 text-xl"> An open-source library to simplify LLM completion + embedding calls. </p>
         </div>
       </a>
-      <a href={"https://docs.litellm.ai/docs/tutorials/first_playground"} target="_blank" rel="noopener noreferrer">
+      <a href={"https://github.com/BerriAI/litellm"} target="_blank" rel="noopener noreferrer">
       <button className="border-2 border-black rounded-lg flex items-center gap-4 px-5 py-3 mb-3 transition duration-300 ease-in-out hover:bg-gray-400">
         <Image
           src="/octocat.svg"
@@ -40,7 +40,7 @@ export default function App() {
           width={20}
           height={20}
         />
-        Create your own Playground
+        Github - LiteLLM
       </button>
       </a>
       <a href='https://discord.com/invite/wuPM9dRgDw' target="_blank" rel="noopener noreferrer">
